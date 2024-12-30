@@ -1,5 +1,5 @@
 import unittest
-from blockBlastSolver import checkClear
+from blockBlastSolver import checkClear, createGame
 
 class Tests(unittest.TestCase):
     def test_checkClear_1(self):
@@ -21,4 +21,10 @@ class Tests(unittest.TestCase):
         expected = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
         checkClear(game)
+        self.assertEqual(game, expected)
+
+    def test_createGame_1(self):
+        game = createGame(4, 2)
+        expected = [[0, 0], [0, 0], [0, 0], [0, 0]]
+
         self.assertEqual(game, expected)
