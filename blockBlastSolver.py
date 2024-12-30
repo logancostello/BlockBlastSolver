@@ -1,4 +1,5 @@
 
+# Functions to check for and clear full rows and columns
 def clearRow(game, row):
     if row < len(game):
         game[row] = [0] * len(game[row])
@@ -35,3 +36,10 @@ def checkClear(game):
     
     for col in colsToClear:
         clearCol(game, col)
+
+# Function to create an empty game
+def createGame(numRows, numCols):
+    if numRows > 0 and numCols > 0:
+        return [[0] * numCols for r in range(numRows)] 
+    else:
+        raise Exception("Dimensions must be > 0")
