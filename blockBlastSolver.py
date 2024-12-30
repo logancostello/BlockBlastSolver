@@ -43,3 +43,25 @@ def createGame(numRows, numCols):
         return [[0] * numCols for r in range(numRows)] 
     else:
         raise Exception("Dimensions must be > 0")
+
+# Function to check if a piece can be played at a coordinate
+# A piece is a list of coordinates: [row, col]
+# The row and col indicate the top left coordinate if the block was a rectangle
+def canPlayPiece(game, desiredRow, desiredCol, piece):
+    for rowOffset, colOffset in piece:
+        row = desiredRow + rowOffset
+        col = desiredCol + colOffset
+        if row >= len(game) or col >= len(game[0]) or game[row][col]:
+            return False
+    return True
+
+# Function to play a piece
+# Assumes it is safe to do so
+def playPiece(game, desiredRow, desiredCol, piece):
+    for rowOffset, colOffset in piece:
+        row = desiredRow + rowOffset
+        col = desiredCol + colOffset
+        game[row][col] = 1
+
+
+
