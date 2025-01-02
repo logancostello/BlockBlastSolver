@@ -1,5 +1,5 @@
 import unittest
-from blockBlastSolver import checkClear, createGame, canPlayPiece, playPiece, scoreCurrentState, findBestMove, findBestMovesInOrder
+from blockBlastSolver import checkClear, createGame, canPlayPiece, playPiece, scoreCurrentState, findBestMove, findBestMovesInOrder, findBestMoves
 
 class Tests(unittest.TestCase):
     def test_checkClear_1(self):
@@ -140,5 +140,46 @@ class Tests(unittest.TestCase):
         moves, score = findBestMovesInOrder(game, pieces)
         
         self.assertEqual(score, scoreCurrentState(game))
+
+    def test_findBestMovesInOrder_3(self):
+        game = createGame(2, 2)
+        twoByTwo = [[0, 0], [1, 0], [0, 1], [1, 1]]
+        oneByOne = [[0, 0]]
+        smallL = [[0, 0], [1, 0], [0, 1]]
+        pieces = [twoByTwo, oneByOne, smallL]
+        moves, score = findBestMovesInOrder(game, pieces)
+
+        self.assertEqual(score, scoreCurrentState(game))
+
+    def test_findBestMoves_1(self):
+        game = createGame(1, 1)
+        moves, pieces, score = findBestMoves(game, [[[0, 0]]])
+
+        self.assertEqual(score, scoreCurrentState(game))
+
+    def test_findBestMoves_2(self):
+        game = createGame(2, 2)
+        twoByTwo = [[0, 0], [1, 0], [0, 1], [1, 1]]
+        oneByOne = [[0, 0]]
+        smallL = [[0, 0], [1, 0], [0, 1]]
+        pieces = [twoByTwo, oneByOne, smallL]
+
+        moves, pieceOrder, score = findBestMoves(game, pieces)
+
+        self.assertEqual(score, scoreCurrentState(createGame(2, 2)))
+
+    def test_findBestMoves_3(self):
+        game = createGame(2, 2)
+        twoByTwo = [[0, 0], [1, 0], [0, 1], [1, 1]]
+        oneByOne = [[0, 0]]
+        smallL = [[0, 0], [1, 0], [0, 1]]
+        pieces = [twoByTwo, oneByOne, smallL, oneByOne]
+        playPiece(game, 0, 0, smallL)
+
+        moves, pieceOrder, score = findBestMoves(game, pieces)
+
+        self.assertEqual(score, scoreCurrentState(createGame(2, 2)))
+
+
 
 
