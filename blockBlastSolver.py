@@ -1,3 +1,4 @@
+import itertools
 
 # Functions to check for and clear full rows and columns
 def clearRow(game, row):
@@ -127,11 +128,33 @@ def findBestMovesInOrder(game, pieces):
         for row, col in possibleMoves:
             gameCopy = game
             playPiece(gameCopy, row, col, piece)
+            checkClear(gameCopy)
             positions, score = findBestMovesInOrder(gameCopy, pieces)
             if score > maxScore:
                 maxScore = score
                 bestMoves = [[row, col]] + positions
         return [bestMoves, maxScore]
+
+# Given a list of pieces, find the best way to play them
+# Return the positions, the pieces the played order, and the final score
+def findBestMoves(game, pieces):
+    allPieceOrders = itertools.permutations(pieces)
+    bestScore = float('-inf')
+    bestPieceOrder = None
+    bestPositions = None
+    for piecesInOrder in allPieceOrders:
+        piecesInOrder = list(piecesInOrder)
+        positions, score = findBestMovesInOrder(game, piecesInOrder)
+        if score > bestScore:
+            bestScore = score
+            bestPieceOrder = piecesInOrder
+            bestPositions = positions
+
+    return [positions, bestPieceOrder, bestScore]
+
+
+
+
 
 
 
